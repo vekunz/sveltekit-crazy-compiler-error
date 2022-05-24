@@ -4,7 +4,7 @@ This repository demonstrates a very weird compiler error in SvelteKit.
 
 ## Setup
 
-The reproduce the error, you need four things to exist in your SvelteKit application.
+To reproduce the error, you need four things to exist in your SvelteKit application.
 
 1. In the `svelte.config.js` set the key `kit.vite.build.target` to `esnext`.
 2. Have a Svelte component with some styling (in this case `SomeComponent.svelte`)
@@ -13,7 +13,7 @@ The reproduce the error, you need four things to exist in your SvelteKit applica
 
 ## The error
 
-If you no run the build command (`npm run build`), you will get this error message.
+If you now run the build command (`npm run build`), you will get this error message.
 
 ```
 Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\somePath\sveltekit-crazy-compile-error\.svelte-kit\output\server\chunks\SomeComponent.svelte_svelte_type_style_lang-6fa38ce4.js' imported from C:\somePath\sveltekit-crazy-compile-error\.svelte-kit\output\server\entries\pages\__layout.svelte.js
