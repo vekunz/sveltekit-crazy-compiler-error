@@ -1,38 +1,34 @@
-# create-svelte
+# Crazy SvelteKit compiler error
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This repository demonstrates a very weird compiler error in SvelteKit.
 
-## Creating a project
+## Setup
 
-If you're seeing this, you've probably already done this step. Congrats!
+The reproduce the error, you need four things to exist in your SvelteKit application.
 
-```bash
-# create a new project in the current directory
-npm init svelte
+1. In the `svelte.config.js` set the key `kit.vite.build.target` to `esnext`.
+2. Have a Svelte component with some styling (in this case `SomeComponent.svelte`)
+3. Have a `__layout.svelte` and any `some-route.svelte`, which both use the component from step 2.
+4. Put the component in either the `__layout.svelte` or the `some-route.svelte` (or in both) inside an `{#if ...}` statement
 
-# create a new project in my-app
-npm init svelte my-app
+## The error
+
+If you no run the build command (`npm run build`), you will get this error message.
+
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\somePath\sveltekit-crazy-compile-error\.svelte-kit\output\server\chunks\SomeComponent.svelte_svelte_type_style_lang-6fa38ce4.js' imported from C:\somePath\sveltekit-crazy-compile-error\.svelte-kit\output\server\entries\pages\__layout.svelte.js
+    at new NodeError (node:internal/errors:371:5)
+    at finalizeResolution (node:internal/modules/esm/resolve:418:11)
+    at moduleResolve (node:internal/modules/esm/resolve:981:10)
+    at defaultResolve (node:internal/modules/esm/resolve:1078:11)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:530:30)
+    at ESMLoader.getModuleJob (node:internal/modules/esm/loader:251:18)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:79:40)
+    at link (node:internal/modules/esm/module_job:78:36)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\somePath\sveltekit-crazy-compile-error\.svelte-kit\output\server\chunks\SomeComponent.svelte_svelte_type_style_lang-6fa38ce4.js' imported from C:\somePath\sveltekit-crazy-compile-error\.svelte-kit\output\server\entries\pages\__layout.svelte.js
+> 500 /
+    at file:///C:/somePath/sveltekit-crazy-compile-error/node_modules/@sveltejs/kit/dist/chunks/index2.js:1037:11
+    at save (file:///C:/somePath/sveltekit-crazy-compile-error/node_modules/@sveltejs/kit/dist/chunks/index2.js:1257:4)
+    at visit (file:///C:/somePath/sveltekit-crazy-compile-error/node_modules/@sveltejs/kit/dist/chunks/index2.js:1148:3)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
